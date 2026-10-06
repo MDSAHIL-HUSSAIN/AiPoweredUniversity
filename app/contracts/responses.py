@@ -30,7 +30,7 @@ class Citation(BaseModel):
 class AppliedRule(BaseModel):
     rule_id: str
     source_doc_id: str
-    source_section: str
+    source_section: str | None = None
     value: Any
 
 

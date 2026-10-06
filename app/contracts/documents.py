@@ -27,6 +27,7 @@ class RetrievedChunk(BaseModel):
     supersedes: list[str] = Field(default_factory=list)
     scope_programmes: list[str] = Field(default_factory=lambda: ["ALL"])
     scope_batches: list[str] = Field(default_factory=lambda: ["ALL"])
+    provenance: str | None = None
     synthetic: bool = False
     score: float = Field(ge=0.0)
 

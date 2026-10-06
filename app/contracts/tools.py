@@ -16,6 +16,8 @@ class ToolResult(BaseModel):
 
 class ToolInvocation(BaseModel):
     tool: str
-    inputs: dict[str, Any] = Field(default_factory=dict)
+    input: dict[str, Any] = Field(default_factory=dict)
     output: dict[str, Any] = Field(default_factory=dict)
+    status: str | None = None
+    latency_ms: int | None = Field(default=None, ge=0)
 

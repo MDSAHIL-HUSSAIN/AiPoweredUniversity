@@ -32,6 +32,17 @@ Run the contract tests:
 pytest
 ```
 
+Run a real structured-routing smoke test against the Ollama model configured in
+`.env`:
+
+```powershell
+python -m scripts.smoke_test_router
+```
+
+Set `MOCK_LLM=true` to develop the workflow without Ollama. The real router applies
+deterministic policy guards after model parsing, so identity always comes from the
+trusted request context and only allowlisted university tools can be selected.
+
 ## Integration boundaries
 
 Shared Pydantic models live in `app/contracts`. Change them only through a pull
