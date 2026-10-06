@@ -1,0 +1,11 @@
+Generate exactly {n} students with these IDs, programmes and batches:
+{assignments}
+
+Make the group varied, like a real class:
+- attendance mostly between 33 and 40 classes out of 40; one or two students can have exactly 30 or 31 classes in one course (they met the old rule in May but not the current one)
+- about 1 in 6 students fails one course (total_marks between 20 and 37) and then has active_backlogs 1
+- do NOT use ABSENT, DETAINED or SUPPLEMENTARY results in this group
+- cgpa spread between 5.50 and 9.60, not all similar
+- do not give anyone classes_attended exactly {now_need} or {old_need}, and do not give anyone cgpa exactly {cgpa_cut}
+
+{common}

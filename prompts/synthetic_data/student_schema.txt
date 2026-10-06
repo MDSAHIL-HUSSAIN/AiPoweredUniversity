@@ -1,0 +1,31 @@
+{
+  "students": [
+    {
+      "student_id": "S1001",
+      "full_name": "string",
+      "programme": "B.Tech CSE" or "B.Tech EE",
+      "batch_year": 2023 or 2024,
+      "current_semester": integer,
+      "cgpa": number with 2 decimals,
+      "active_backlogs": integer,
+      "records": [
+        {
+          "course_code": "string",
+          "classes_held": integer,
+          "classes_attended": integer,
+          "results": [
+            {
+              "exam_session": "2026-MAY",
+              "exam_type": "REGULAR" or "SUPPLEMENTARY",
+              "internal_marks": integer 0-40,
+              "external_marks": integer 0-60,
+              "total_marks": integer,
+              "max_marks": 100,
+              "result": "PASS" or "FAIL" or "ABSENT" or "DETAINED"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,773 @@
+{
+  "Q08": {
+    "student_id": "S1001",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "get_attendance",
+      "success": true,
+      "inputs": {
+        "student_id": "S1001",
+        "course_code": "Data Structures"
+      },
+      "output": {
+        "student_id": "S1001",
+        "attendance": [
+          {
+            "course_code": "CS201",
+            "course_name": "Data Structures",
+            "classes_held": 40,
+            "classes_attended": 32,
+            "attendance_pct": 80.0
+          }
+        ],
+        "status": "ok"
+      },
+      "applied_rule_ids": [],
+      "error": null
+    }
+  },
+  "Q09": {
+    "student_id": "S1001",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_exam_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1001",
+        "course_code": "CS201",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "end_sem_exam_eligibility",
+        "course_code": "CS201",
+        "course_name": "Data Structures",
+        "classes_held": 40,
+        "classes_attended": 32,
+        "attendance_pct": 80.0,
+        "threshold": ">= 80%",
+        "result": "ELIGIBLE",
+        "as_of_date": "2026-10-06",
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "ATT-MIN-02",
+            "description": "Minimum attendance percentage in a course to appear in its end-semester exam (revised by circular)",
+            "parameter": "min_attendance_pct",
+            "operator": ">=",
+            "value": "80",
+            "effective_from": "2026-08-01",
+            "effective_to": null,
+            "source_doc_id": "ACAD-CIRC-2026-08-SYN",
+            "source_section": "1"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "ATT-MIN-02"
+      ],
+      "error": null
+    }
+  },
+  "Q10": {
+    "student_id": "S1002",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_exam_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1002",
+        "course_code": "Data Structures",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "end_sem_exam_eligibility",
+        "course_code": "CS201",
+        "course_name": "Data Structures",
+        "classes_held": 40,
+        "classes_attended": 31,
+        "attendance_pct": 77.5,
+        "threshold": ">= 80%",
+        "result": "NOT_ELIGIBLE",
+        "as_of_date": "2026-10-06",
+        "classes_needed_for_threshold": 32,
+        "short_by_classes": 1,
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "ATT-MIN-02",
+            "description": "Minimum attendance percentage in a course to appear in its end-semester exam (revised by circular)",
+            "parameter": "min_attendance_pct",
+            "operator": ">=",
+            "value": "80",
+            "effective_from": "2026-08-01",
+            "effective_to": null,
+            "source_doc_id": "ACAD-CIRC-2026-08-SYN",
+            "source_section": "1"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "ATT-MIN-02"
+      ],
+      "error": null
+    }
+  },
+  "Q11": {
+    "student_id": "S1010",
+    "as_of_date": "2026-07-15",
+    "tool_result": {
+      "tool_name": "check_exam_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1010",
+        "course_code": "Network Analysis",
+        "as_of_date": "2026-07-15"
+      },
+      "output": {
+        "check": "end_sem_exam_eligibility",
+        "course_code": "EE201",
+        "course_name": "Network Analysis",
+        "classes_held": 40,
+        "classes_attended": 30,
+        "attendance_pct": 75.0,
+        "threshold": ">= 75%",
+        "result": "ELIGIBLE",
+        "as_of_date": "2026-07-15",
+        "upcoming_rules": [
+          {
+            "rule_id": "ATT-MIN-02",
+            "description": "Minimum attendance percentage in a course to appear in its end-semester exam (revised by circular)",
+            "parameter": "min_attendance_pct",
+            "operator": ">=",
+            "value": "80",
+            "effective_from": "2026-08-01",
+            "effective_to": null,
+            "source_doc_id": "ACAD-CIRC-2026-08-SYN",
+            "source_section": "1"
+          }
+        ],
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "ATT-MIN-01",
+            "description": "Minimum attendance percentage in a course to appear in its end-semester exam",
+            "parameter": "min_attendance_pct",
+            "operator": ">=",
+            "value": "75",
+            "effective_from": "2024-07-01",
+            "effective_to": "2026-07-31",
+            "source_doc_id": "NSUT-20260422-ATT75",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "ATT-MIN-01"
+      ],
+      "error": null
+    }
+  },
+  "Q12": {
+    "student_id": "S1010",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_exam_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1010",
+        "course_code": "Network Analysis",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "end_sem_exam_eligibility",
+        "course_code": "EE201",
+        "course_name": "Network Analysis",
+        "classes_held": 40,
+        "classes_attended": 30,
+        "attendance_pct": 75.0,
+        "threshold": ">= 80%",
+        "result": "NOT_ELIGIBLE",
+        "as_of_date": "2026-10-06",
+        "classes_needed_for_threshold": 32,
+        "short_by_classes": 2,
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "ATT-MIN-02",
+            "description": "Minimum attendance percentage in a course to appear in its end-semester exam (revised by circular)",
+            "parameter": "min_attendance_pct",
+            "operator": ">=",
+            "value": "80",
+            "effective_from": "2026-08-01",
+            "effective_to": null,
+            "source_doc_id": "ACAD-CIRC-2026-08-SYN",
+            "source_section": "1"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "ATT-MIN-02"
+      ],
+      "error": null
+    }
+  },
+  "Q13": {
+    "student_id": "S1004",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_supplementary_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1004",
+        "course_code": "Mathematics",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "supplementary_eligibility",
+        "course_code": "MA201",
+        "course_name": "Mathematics III",
+        "latest_result": "ABSENT",
+        "latest_session": "2026-MAY",
+        "latest_exam_type": "REGULAR",
+        "as_of_date": "2026-10-06",
+        "result": "ELIGIBLE",
+        "allowed_results": [
+          "FAIL",
+          "ABSENT"
+        ],
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "SUPP-ELIG-01",
+            "description": "Latest results that allow a student to take the supplementary exam in a course",
+            "parameter": "supp_allowed_results",
+            "operator": "in",
+            "value": "FAIL;ABSENT",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "NSUT-20260508-SUMMER",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "SUPP-ELIG-01"
+      ],
+      "error": null
+    }
+  },
+  "Q14": {
+    "student_id": "S1005",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_supplementary_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1005",
+        "course_code": "Electrical Machines",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "supplementary_eligibility",
+        "course_code": "EE203",
+        "course_name": "Electrical Machines I",
+        "latest_result": "DETAINED",
+        "latest_session": "2026-MAY",
+        "latest_exam_type": "REGULAR",
+        "as_of_date": "2026-10-06",
+        "result": "NOT_ELIGIBLE",
+        "allowed_results": [
+          "FAIL",
+          "ABSENT"
+        ],
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "SUPP-ELIG-01",
+            "description": "Latest results that allow a student to take the supplementary exam in a course",
+            "parameter": "supp_allowed_results",
+            "operator": "in",
+            "value": "FAIL;ABSENT",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "NSUT-20260508-SUMMER",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "SUPP-ELIG-01"
+      ],
+      "error": null
+    }
+  },
+  "Q15": {
+    "student_id": "S1007",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_placement_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1007",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "placement_eligibility",
+        "result": "ELIGIBLE",
+        "checks": [
+          {
+            "parameter": "cgpa",
+            "value": 6.5,
+            "required": ">= 6.5",
+            "passed": true,
+            "rule_id": "PLC-CGPA-01"
+          },
+          {
+            "parameter": "active_backlogs",
+            "value": 0,
+            "required": "<= 0",
+            "passed": true,
+            "rule_id": "PLC-BKLG-01"
+          }
+        ],
+        "as_of_date": "2026-10-06",
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "PLC-CGPA-01",
+            "description": "Minimum CGPA to register for campus placement",
+            "parameter": "min_placement_cgpa",
+            "operator": ">=",
+            "value": "6.5",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          },
+          {
+            "rule_id": "PLC-BKLG-01",
+            "description": "Maximum active backlogs allowed to register for campus placement",
+            "parameter": "max_active_backlogs",
+            "operator": "<=",
+            "value": "0",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "PLC-CGPA-01",
+        "PLC-BKLG-01"
+      ],
+      "error": null
+    }
+  },
+  "Q16": {
+    "student_id": "S1008",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_placement_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1008",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "placement_eligibility",
+        "result": "NOT_ELIGIBLE",
+        "checks": [
+          {
+            "parameter": "cgpa",
+            "value": 6.49,
+            "required": ">= 6.5",
+            "passed": false,
+            "rule_id": "PLC-CGPA-01"
+          },
+          {
+            "parameter": "active_backlogs",
+            "value": 0,
+            "required": "<= 0",
+            "passed": true,
+            "rule_id": "PLC-BKLG-01"
+          }
+        ],
+        "as_of_date": "2026-10-06",
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "PLC-CGPA-01",
+            "description": "Minimum CGPA to register for campus placement",
+            "parameter": "min_placement_cgpa",
+            "operator": ">=",
+            "value": "6.5",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          },
+          {
+            "rule_id": "PLC-BKLG-01",
+            "description": "Maximum active backlogs allowed to register for campus placement",
+            "parameter": "max_active_backlogs",
+            "operator": "<=",
+            "value": "0",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "PLC-CGPA-01",
+        "PLC-BKLG-01"
+      ],
+      "error": null
+    }
+  },
+  "Q17": {
+    "student_id": "S1003",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "run_what_if",
+      "success": true,
+      "inputs": {
+        "student_id": "S1003",
+        "changes": {
+          "pass_courses": [
+            "Data Structures"
+          ]
+        },
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "what_if",
+        "result": "ELIGIBLE",
+        "scenario_possible": true,
+        "changes_applied": {
+          "pass_courses": [
+            "Data Structures"
+          ]
+        },
+        "ignored_changes": [],
+        "placement_before": {
+          "check": "placement_eligibility",
+          "result": "NOT_ELIGIBLE",
+          "checks": [
+            {
+              "parameter": "cgpa",
+              "value": 7.1,
+              "required": ">= 6.5",
+              "passed": true,
+              "rule_id": "PLC-CGPA-01"
+            },
+            {
+              "parameter": "active_backlogs",
+              "value": 1,
+              "required": "<= 0",
+              "passed": false,
+              "rule_id": "PLC-BKLG-01"
+            }
+          ],
+          "as_of_date": "2026-10-06"
+        },
+        "placement_after": {
+          "check": "placement_eligibility",
+          "result": "ELIGIBLE",
+          "checks": [
+            {
+              "parameter": "cgpa",
+              "value": 7.1,
+              "required": ">= 6.5",
+              "passed": true,
+              "rule_id": "PLC-CGPA-01"
+            },
+            {
+              "parameter": "active_backlogs",
+              "value": 0,
+              "required": "<= 0",
+              "passed": true,
+              "rule_id": "PLC-BKLG-01"
+            }
+          ],
+          "as_of_date": "2026-10-06"
+        },
+        "supplementary_checks": [
+          {
+            "check": "supplementary_eligibility",
+            "course_code": "CS201",
+            "course_name": "Data Structures",
+            "latest_result": "FAIL",
+            "latest_session": "2026-MAY",
+            "latest_exam_type": "REGULAR",
+            "as_of_date": "2026-10-06",
+            "result": "ELIGIBLE",
+            "allowed_results": [
+              "FAIL",
+              "ABSENT"
+            ],
+            "status": "ok",
+            "rules": [
+              {
+                "rule_id": "SUPP-ELIG-01",
+                "description": "Latest results that allow a student to take the supplementary exam in a course",
+                "parameter": "supp_allowed_results",
+                "operator": "in",
+                "value": "FAIL;ABSENT",
+                "effective_from": "2024-07-01",
+                "effective_to": null,
+                "source_doc_id": "NSUT-20260508-SUMMER",
+                "source_section": "TBD"
+              }
+            ]
+          }
+        ],
+        "exam_eligibility_after": [],
+        "assumptions": [
+          "Student passes the supplementary exam in CS201",
+          "Active backlogs go from 1 to 0",
+          "CGPA kept at 7.1: grade points are not in the data, so the CGPA change after passing is not modelled"
+        ],
+        "as_of_date": "2026-10-06",
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "SUPP-ELIG-01",
+            "description": "Latest results that allow a student to take the supplementary exam in a course",
+            "parameter": "supp_allowed_results",
+            "operator": "in",
+            "value": "FAIL;ABSENT",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "NSUT-20260508-SUMMER",
+            "source_section": "TBD"
+          },
+          {
+            "rule_id": "PLC-CGPA-01",
+            "description": "Minimum CGPA to register for campus placement",
+            "parameter": "min_placement_cgpa",
+            "operator": ">=",
+            "value": "6.5",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          },
+          {
+            "rule_id": "PLC-BKLG-01",
+            "description": "Maximum active backlogs allowed to register for campus placement",
+            "parameter": "max_active_backlogs",
+            "operator": "<=",
+            "value": "0",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "SUPP-ELIG-01",
+        "PLC-CGPA-01",
+        "PLC-BKLG-01"
+      ],
+      "error": null
+    }
+  },
+  "Q18": {
+    "student_id": "S1006",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "run_what_if",
+      "success": true,
+      "inputs": {
+        "student_id": "S1006",
+        "changes": {
+          "pass_courses": [
+            "Network Analysis"
+          ]
+        },
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "what_if",
+        "result": "NOT_ELIGIBLE",
+        "scenario_possible": true,
+        "changes_applied": {
+          "pass_courses": [
+            "Network Analysis"
+          ]
+        },
+        "ignored_changes": [],
+        "placement_before": {
+          "check": "placement_eligibility",
+          "result": "NOT_ELIGIBLE",
+          "checks": [
+            {
+              "parameter": "cgpa",
+              "value": 5.4,
+              "required": ">= 6.5",
+              "passed": false,
+              "rule_id": "PLC-CGPA-01"
+            },
+            {
+              "parameter": "active_backlogs",
+              "value": 3,
+              "required": "<= 0",
+              "passed": false,
+              "rule_id": "PLC-BKLG-01"
+            }
+          ],
+          "as_of_date": "2026-10-06"
+        },
+        "placement_after": {
+          "check": "placement_eligibility",
+          "result": "NOT_ELIGIBLE",
+          "checks": [
+            {
+              "parameter": "cgpa",
+              "value": 5.4,
+              "required": ">= 6.5",
+              "passed": false,
+              "rule_id": "PLC-CGPA-01"
+            },
+            {
+              "parameter": "active_backlogs",
+              "value": 2,
+              "required": "<= 0",
+              "passed": false,
+              "rule_id": "PLC-BKLG-01"
+            }
+          ],
+          "as_of_date": "2026-10-06"
+        },
+        "supplementary_checks": [
+          {
+            "check": "supplementary_eligibility",
+            "course_code": "EE201",
+            "course_name": "Network Analysis",
+            "latest_result": "FAIL",
+            "latest_session": "2026-MAY",
+            "latest_exam_type": "REGULAR",
+            "as_of_date": "2026-10-06",
+            "result": "ELIGIBLE",
+            "allowed_results": [
+              "FAIL",
+              "ABSENT"
+            ],
+            "status": "ok",
+            "rules": [
+              {
+                "rule_id": "SUPP-ELIG-01",
+                "description": "Latest results that allow a student to take the supplementary exam in a course",
+                "parameter": "supp_allowed_results",
+                "operator": "in",
+                "value": "FAIL;ABSENT",
+                "effective_from": "2024-07-01",
+                "effective_to": null,
+                "source_doc_id": "NSUT-20260508-SUMMER",
+                "source_section": "TBD"
+              }
+            ]
+          }
+        ],
+        "exam_eligibility_after": [],
+        "assumptions": [
+          "Student passes the supplementary exam in EE201",
+          "Active backlogs go from 3 to 2",
+          "CGPA kept at 5.4: grade points are not in the data, so the CGPA change after passing is not modelled"
+        ],
+        "as_of_date": "2026-10-06",
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "SUPP-ELIG-01",
+            "description": "Latest results that allow a student to take the supplementary exam in a course",
+            "parameter": "supp_allowed_results",
+            "operator": "in",
+            "value": "FAIL;ABSENT",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "NSUT-20260508-SUMMER",
+            "source_section": "TBD"
+          },
+          {
+            "rule_id": "PLC-CGPA-01",
+            "description": "Minimum CGPA to register for campus placement",
+            "parameter": "min_placement_cgpa",
+            "operator": ">=",
+            "value": "6.5",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          },
+          {
+            "rule_id": "PLC-BKLG-01",
+            "description": "Maximum active backlogs allowed to register for campus placement",
+            "parameter": "max_active_backlogs",
+            "operator": "<=",
+            "value": "0",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "TNP-POLICY-2024",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "SUPP-ELIG-01",
+        "PLC-CGPA-01",
+        "PLC-BKLG-01"
+      ],
+      "error": null
+    }
+  },
+  "Q27": {
+    "student_id": "S1003",
+    "as_of_date": "2026-10-06",
+    "tool_result": {
+      "tool_name": "check_supplementary_eligibility",
+      "success": true,
+      "inputs": {
+        "student_id": "S1003",
+        "course_code": "Data Structures",
+        "as_of_date": "2026-10-06"
+      },
+      "output": {
+        "check": "supplementary_eligibility",
+        "course_code": "CS201",
+        "course_name": "Data Structures",
+        "latest_result": "FAIL",
+        "latest_session": "2026-MAY",
+        "latest_exam_type": "REGULAR",
+        "as_of_date": "2026-10-06",
+        "result": "ELIGIBLE",
+        "allowed_results": [
+          "FAIL",
+          "ABSENT"
+        ],
+        "status": "ok",
+        "rules": [
+          {
+            "rule_id": "SUPP-ELIG-01",
+            "description": "Latest results that allow a student to take the supplementary exam in a course",
+            "parameter": "supp_allowed_results",
+            "operator": "in",
+            "value": "FAIL;ABSENT",
+            "effective_from": "2024-07-01",
+            "effective_to": null,
+            "source_doc_id": "NSUT-20260508-SUMMER",
+            "source_section": "TBD"
+          }
+        ]
+      },
+      "applied_rule_ids": [
+        "SUPP-ELIG-01"
+      ],
+      "error": null
+    }
+  }
+}

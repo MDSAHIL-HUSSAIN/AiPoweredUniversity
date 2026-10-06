@@ -1,0 +1,14 @@
+There are 10 deliberate test-case students, S1001 to S1010, described below. Follow each description exactly. Anything not mentioned should be normal: attendance between {normal_low} and 40 classes, result PASS with total_marks between 55 and 90.
+
+S1001: B.Tech CSE, batch 2024. CS201 classes_attended = {now_need} (exactly the current minimum). All PASS. active_backlogs 0. cgpa about 8.
+S1002: B.Tech CSE, batch 2024. CS201 classes_attended = {now_one_below} (one class below the current minimum). All PASS. active_backlogs 0.
+S1003: B.Tech CSE, batch 2024. CS201 REGULAR result FAIL with total_marks = {fail_total} (one mark below the pass mark). Other courses PASS. active_backlogs 1. cgpa between {cgpa_cut_plus} and 7.50.
+S1004: B.Tech CSE, batch 2023. MA201 REGULAR result ABSENT (external_marks 0, internal_marks around 25). Other courses PASS. active_backlogs 1.
+S1005: B.Tech EE, batch 2024. EE203 classes_attended = 24 and REGULAR result DETAINED (external_marks 0). EE201 and MA203 are PASS with total_marks between 55 and 90. active_backlogs 1.
+S1006: B.Tech EE, batch 2023. FAIL in all three courses EE201, EE203 and MA203 (total_marks between 20 and 35). active_backlogs 3. cgpa between 5.00 and 5.80.
+S1007: B.Tech CSE, batch 2023. cgpa exactly {cgpa_cut}. All PASS. active_backlogs 0.
+S1008: B.Tech EE, batch 2024. cgpa exactly {cgpa_below}. All PASS. active_backlogs 0.
+S1009: B.Tech CSE, batch 2023. CS203 is ONE record (one attendance entry) whose results list has two entries: REGULAR 2026-MAY FAIL (total_marks around 30) and SUPPLEMENTARY 2026-JUL PASS (total_marks around 50). Other courses PASS. active_backlogs 0.
+S1010: B.Tech EE, batch 2023. EE201 classes_attended = {old_need} (exactly the old minimum, below the new one). All PASS. active_backlogs 0.
+
+{common}

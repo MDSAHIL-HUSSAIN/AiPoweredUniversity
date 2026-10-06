@@ -1,0 +1,121 @@
+{
+  "provider": "api",
+  "base_url": "https://api.openai.com/v1",
+  "model": "gpt-4o-mini",
+  "temperature": 0.4,
+  "gen_date": "2026-10-06",
+  "llm_calls": 8,
+  "failed_batches": [
+    "edge"
+  ],
+  "calls": [
+    {
+      "batch": "edge",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 21373,
+      "ok": false,
+      "errors": [
+        "S1001: missing record for CS203",
+        "S1001: missing record for MA201",
+        "S1002: missing record for CS203",
+        "S1002: missing record for MA201",
+        "S1003: missing record for CS203",
+        "S1003: missing record for MA201",
+        "S1004: missing record for CS201",
+        "S1004: missing record for CS203",
+        "S1005: missing record for EE201",
+        "S1005: missing record for MA203",
+        "S1007: missing record for CS203",
+        "S1007: missing record for MA201",
+        "S1008: missing record for EE201",
+        "S1008: missing record for MA203",
+        "S1009: missing record for CS201",
+        "S1009: missing record for MA201",
+        "S1010: missing record for EE203",
+        "S1010: missing record for MA203",
+        "attendance S1009|CS203: duplicate (student_id, course_code)",
+        "S1009 CS203 REGULAR must be FAIL"
+      ]
+    },
+    {
+      "batch": "edge",
+      "attempt": 2,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 37661,
+      "ok": false,
+      "errors": [
+        "students S1005: active_backlogs is 1 but results show 2",
+        "S1009 CS203 SUPPLEMENTARY must be PASS (2026-JUL)"
+      ]
+    },
+    {
+      "batch": "edge",
+      "attempt": 3,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 38465,
+      "ok": false,
+      "errors": [
+        "attendance S1009|CS203: duplicate (student_id, course_code)",
+        "students S1005: active_backlogs is 1 but results show 2",
+        "students S1009: active_backlogs is 1 but results show 0"
+      ]
+    },
+    {
+      "batch": "regular_1",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 27682,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_2",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 32201,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_3",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 16976,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_4",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 19988,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_5",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 21230,
+      "ok": true,
+      "errors": []
+    }
+  ]
+}

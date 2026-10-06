@@ -1,0 +1,150 @@
+{
+  "provider": "api",
+  "base_url": "https://api.openai.com/v1",
+  "model": "gpt-4o-mini",
+  "temperature": 0.4,
+  "gen_date": "2026-10-06",
+  "llm_calls": 13,
+  "failed_batches": [],
+  "max_tries": 4,
+  "calls": [
+    {
+      "batch": "edge_S1001_S1002",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 10044,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "edge_S1003_S1004",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 9567,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "edge_S1005_S1006",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 9747,
+      "ok": false,
+      "errors": [
+        "results S1006|EE203|2026-MAY|REGULAR: attendance 28/40 is below the rule on 2026-05-01 but result is FAIL, expected DETAINED",
+        "results S1006|MA203|2026-MAY|REGULAR: attendance 25/40 is below the rule on 2026-05-01 but result is FAIL, expected DETAINED"
+      ]
+    },
+    {
+      "batch": "edge_S1005_S1006",
+      "attempt": 2,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 10074,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "edge_S1007_S1008",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 9781,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "edge_S1009_S1010",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 11002,
+      "ok": false,
+      "errors": [
+        "results S1009|CS203|2026-MAY|REGULAR: result FAIL but total at/above pass mark"
+      ]
+    },
+    {
+      "batch": "edge_S1009_S1010",
+      "attempt": 2,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 8752,
+      "ok": false,
+      "errors": [
+        "S1009 CS203 REGULAR must be FAIL",
+        "S1009 CS203 SUPPLEMENTARY must be PASS (2026-JUL), as a second entry in the results list of the same CS203 record"
+      ]
+    },
+    {
+      "batch": "edge_S1009_S1010",
+      "attempt": 3,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 10605,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_1",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 22596,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_2",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 25342,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_3",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 23326,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_4",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 21902,
+      "ok": true,
+      "errors": []
+    },
+    {
+      "batch": "regular_5",
+      "attempt": 1,
+      "provider": "api",
+      "model": "gpt-4o-mini",
+      "temperature": 0.4,
+      "ms": 20717,
+      "ok": true,
+      "errors": []
+    }
+  ]
+}
