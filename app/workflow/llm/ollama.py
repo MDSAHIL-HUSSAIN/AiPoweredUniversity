@@ -1,6 +1,7 @@
 """Ollama-backed structured router with validation and safe fallback."""
 
 from datetime import date
+from time import perf_counter
 from typing import Any
 
 import httpx
@@ -98,10 +99,12 @@ class OllamaWorkflowLLM:
         self._structured_router = chat.with_structured_output(
             RouteDecision,
             method="json_schema",
+            include_raw=True,
         )
         self._structured_composer = chat.with_structured_output(
             DraftAnswer,
             method="json_schema",
+            include_raw=True,
         )
 
     async def health_check(self) -> tuple[bool, str]:
@@ -125,7 +128,9 @@ class OllamaWorkflowLLM:
         return True, "ok"
 
     async def route(self, question: str, as_of_date: date) -> RouteOutcome:
+        started = perf_counter()
         errors: list[str] = []
+        token_count = 0
         messages = [
             SystemMessage(content=ROUTER_SYSTEM_PROMPT),
             HumanMessage(
@@ -138,7 +143,9 @@ class OllamaWorkflowLLM:
 
         for attempt in range(1, self.settings.router_max_attempts + 1):
             try:
-                decision = await self._structured_router.ainvoke(messages)
+                response = await self._structured_router.ainvoke(messages)
+                decision, usage = _unpack_structured(response, RouteDecision)
+                token_count += usage
                 if not isinstance(decision, RouteDecision):
                     decision = RouteDecision.model_validate(decision)
                 decision = normalize_route_decision(question, decision)
@@ -148,6 +155,8 @@ class OllamaWorkflowLLM:
                     fallback_used=False,
                     errors=errors,
                     model_name=self.model_name,
+                    token_count=token_count,
+                    latency_ms=_elapsed_ms(started),
                 )
             except Exception as exc:  # provider and schema failures share one fallback path
                 errors.append(f"router attempt {attempt} failed: {type(exc).__name__}: {exc}")
@@ -159,6 +168,8 @@ class OllamaWorkflowLLM:
             fallback_used=True,
             errors=errors,
             model_name=self.model_name,
+            token_count=token_count,
+            latency_ms=_elapsed_ms(started),
         )
 
     async def compose(
@@ -170,6 +181,7 @@ class OllamaWorkflowLLM:
         tool_results: list[ToolResult],
         conflicts: list[Conflict],
     ) -> ComposeOutcome:
+        started = perf_counter()
         if self._structured_composer is None:
             fallback = await self._fallback.compose(
                 question,
@@ -185,6 +197,8 @@ class OllamaWorkflowLLM:
                 fallback_used=True,
                 errors=["structured composer unavailable; used deterministic fallback"],
                 model_name=self.model_name,
+                token_count=fallback.token_count,
+                latency_ms=_elapsed_ms(started),
             )
 
         source_payload = [
@@ -233,9 +247,12 @@ class OllamaWorkflowLLM:
             ),
         ]
         errors: list[str] = []
+        token_count = 0
         for attempt in range(1, self.settings.router_max_attempts + 1):
             try:
-                draft = await self._structured_composer.ainvoke(messages)
+                response = await self._structured_composer.ainvoke(messages)
+                draft, usage = _unpack_structured(response, DraftAnswer)
+                token_count += usage
                 if not isinstance(draft, DraftAnswer):
                     draft = DraftAnswer.model_validate(draft)
                 return ComposeOutcome(
@@ -243,6 +260,8 @@ class OllamaWorkflowLLM:
                     attempts=attempt,
                     model_name=self.model_name,
                     errors=errors,
+                    token_count=token_count,
+                    latency_ms=_elapsed_ms(started),
                 )
             except Exception as exc:
                 errors.append(
@@ -263,5 +282,38 @@ class OllamaWorkflowLLM:
             fallback_used=True,
             errors=errors,
             model_name=self.model_name,
+            token_count=token_count,
+            latency_ms=_elapsed_ms(started),
         )
+
+
+def _elapsed_ms(started: float) -> int:
+    return max(0, round((perf_counter() - started) * 1000))
+
+
+def _unpack_structured(response: Any, model_type: type[Any]) -> tuple[Any, int]:
+    """Accept LangChain include_raw output and simple test/injected adapters."""
+
+    if not isinstance(response, dict) or "parsed" not in response:
+        return response, 0
+
+    parsing_error = response.get("parsing_error")
+    if parsing_error is not None:
+        raise parsing_error
+    parsed = response.get("parsed")
+    if parsed is None:
+        raise ValueError(f"Ollama returned no parsed {model_type.__name__}")
+    return parsed, _token_count(response.get("raw"))
+
+
+def _token_count(raw_message: Any) -> int:
+    if raw_message is None:
+        return 0
+    usage = getattr(raw_message, "usage_metadata", None) or {}
+    if usage.get("total_tokens") is not None:
+        return int(usage["total_tokens"])
+    metadata = getattr(raw_message, "response_metadata", None) or {}
+    return int(metadata.get("prompt_eval_count", 0)) + int(
+        metadata.get("eval_count", 0)
+    )
 

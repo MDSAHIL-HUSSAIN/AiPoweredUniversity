@@ -43,6 +43,10 @@ Set `MOCK_LLM=true` to develop the workflow without Ollama. The real router appl
 deterministic policy guards after model parsing, so identity always comes from the
 trusted request context and only allowlisted university tools can be selected.
 
+Member 4's API/engine integration contract, Docker host configuration, supported
+model overrides, and compatibility facade are documented in
+[`docs/ollama_integration.md`](docs/ollama_integration.md).
+
 ## Integration boundaries
 
 Shared Pydantic models live in `app/contracts`. Change them only through a pull

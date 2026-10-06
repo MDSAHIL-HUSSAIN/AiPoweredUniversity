@@ -57,6 +57,10 @@ async def main() -> None:
     print("citations:", [item.model_dump(mode="json") for item in result["citations"]])
     print("tool:", result["tools_invoked"][0].model_dump(mode="json"))
     print("fallback_used:", result["fallback_used"])
+    print("model_name:", result["model_name"])
+    print("token_count:", result["token_count"])
+    print("llm_latency_ms:", result["latency_ms"])
+    print("audit_metadata:", result["audit_metadata"])
     print("errors:", result["errors"])
 
 

@@ -17,10 +17,16 @@ def make_router_node(
         return {
             "route": outcome.decision,
             "llm_calls": state.get("llm_calls", 0) + outcome.attempts,
+            "token_count": state.get("token_count", 0) + outcome.token_count,
+            "latency_ms": state.get("latency_ms", 0) + outcome.latency_ms,
             "model_name": outcome.model_name,
             "fallback_used": state.get("fallback_used", False)
             or outcome.fallback_used,
             "errors": [*state.get("errors", []), *outcome.errors],
+            "audit_metadata": {
+                **state.get("audit_metadata", {}),
+                "router_latency_ms": outcome.latency_ms,
+            },
         }
 
     return router_node

@@ -40,6 +40,7 @@ def new_workflow_state(
         citations=[],
         errors=[],
         llm_calls=0,
+        token_count=0,
         fallback_used=False,
         latency_ms=0,
         audit_metadata={},

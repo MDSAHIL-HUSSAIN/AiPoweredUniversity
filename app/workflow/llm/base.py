@@ -17,6 +17,8 @@ class RouteOutcome(BaseModel):
     fallback_used: bool = False
     errors: list[str] = Field(default_factory=list)
     model_name: str
+    token_count: int = Field(default=0, ge=0)
+    latency_ms: int = Field(default=0, ge=0)
 
 
 class DraftAnswer(BaseModel):
@@ -34,6 +36,8 @@ class ComposeOutcome(BaseModel):
     fallback_used: bool = False
     errors: list[str] = Field(default_factory=list)
     model_name: str
+    token_count: int = Field(default=0, ge=0)
+    latency_ms: int = Field(default=0, ge=0)
 
 
 class WorkflowLLM(Protocol):
