@@ -16,6 +16,12 @@ if ($RealLlm) {
     $env:MOCK_LLM = "true"
 }
 
+# Member 2's final retriever will replace this temporary in-memory fallback.
+# Disabling Chroma here avoids an unexpected first-run embedding-model download.
+if (-not $env:CHROMA_DISABLED) {
+    $env:CHROMA_DISABLED = "true"
+}
+
 $api = Start-Job -Name "university-api" -ScriptBlock {
     param($pythonPath, $root)
     Set-Location -LiteralPath $root
@@ -25,7 +31,9 @@ $api = Start-Job -Name "university-api" -ScriptBlock {
 $ui = Start-Job -Name "university-ui" -ScriptBlock {
     param($pythonPath, $root)
     Set-Location -LiteralPath $root
-    & $pythonPath -m streamlit run streamlit_app.py
+    & $pythonPath -m streamlit run streamlit_app.py `
+        --server.headless true `
+        --browser.gatherUsageStats false
 } -ArgumentList $python, $projectRoot
 
 Write-Host "FastAPI:   http://localhost:8000/docs"
@@ -34,10 +42,10 @@ Write-Host "Press Ctrl+C to stop both services."
 
 try {
     while ($api.State -eq "Running" -or $ui.State -eq "Running") {
-        Receive-Job -Job $api, $ui
+        Receive-Job -Job $api, $ui -ErrorAction SilentlyContinue
         Start-Sleep -Seconds 1
     }
-    Receive-Job -Job $api, $ui
+    Receive-Job -Job $api, $ui -ErrorAction Continue
 } finally {
     Stop-Job -Job $api, $ui -ErrorAction SilentlyContinue
     Remove-Job -Job $api, $ui -Force -ErrorAction SilentlyContinue
