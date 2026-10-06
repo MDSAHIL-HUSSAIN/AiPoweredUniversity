@@ -5,6 +5,7 @@ from typing import Any, TypedDict
 
 from app.contracts import (
     AppliedRule,
+    AuthorizationResult,
     Citation,
     Conflict,
     RetrievedChunk,
@@ -21,6 +22,7 @@ class WorkflowState(TypedDict, total=False):
     student_id: str | None
     as_of_date: date
     route: RouteDecision
+    authorization: AuthorizationResult
     retrieved_chunks: list[RetrievedChunk]
     current_evidence: list[RetrievedChunk]
     upcoming_changes: list[RetrievedChunk]

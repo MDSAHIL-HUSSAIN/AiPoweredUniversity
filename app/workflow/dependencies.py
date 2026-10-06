@@ -22,7 +22,9 @@ class Retriever(Protocol):
 
 
 class UniversityTools(Protocol):
-    def get_attendance(self, student_id: str, course_code: str) -> ToolResult: ...
+    def get_attendance(
+        self, student_id: str, course_code: str | None = None
+    ) -> ToolResult: ...
 
     def get_results(
         self, student_id: str, course_code: str | None = None
@@ -47,8 +49,23 @@ class UniversityTools(Protocol):
 
 class Authorizer(Protocol):
     def authorize(
-        self, student_id: str | None, question_category: str
+        self,
+        student_id: str | None,
+        question_category: str,
+        question: str = "",
     ) -> AuthorizationResult: ...
+
+
+class ToolExecutor(Protocol):
+    """Stable boundary around Member 1's ``call_tool`` dispatcher."""
+
+    def execute(
+        self,
+        tool_name: str,
+        student_id: str | None,
+        args: dict[str, Any],
+        as_of_date: date,
+    ) -> ToolResult: ...
 
 
 class AuditRepository(Protocol):

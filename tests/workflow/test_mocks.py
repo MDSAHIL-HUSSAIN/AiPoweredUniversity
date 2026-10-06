@@ -13,6 +13,7 @@ def test_mock_tool_uses_consistent_contract():
     assert result.success is True
     assert result.tool_name == "get_attendance"
     assert result.inputs == {"student_id": "S1001", "course_code": "CS201"}
+    assert result.output["status"] == "ok"
 
 
 def test_mock_eligibility_serializes_date():
