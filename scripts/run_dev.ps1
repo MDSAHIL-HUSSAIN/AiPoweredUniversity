@@ -1,5 +1,6 @@
 param(
-    [switch]$RealLlm
+    [switch]$RealLlm,
+    [switch]$RealRetrieval
 )
 
 $ErrorActionPreference = "Stop"
@@ -16,9 +17,11 @@ if ($RealLlm) {
     $env:MOCK_LLM = "true"
 }
 
-# Member 2's final retriever will replace this temporary in-memory fallback.
-# Disabling Chroma here avoids an unexpected first-run embedding-model download.
-if (-not $env:CHROMA_DISABLED) {
+# Lightweight mode still uses Member 2's complete ingestion/retrieval interfaces,
+# with in-memory vectors and deterministic embeddings for quick local startup.
+if ($RealRetrieval) {
+    $env:CHROMA_DISABLED = "false"
+} elseif (-not $env:CHROMA_DISABLED) {
     $env:CHROMA_DISABLED = "true"
 }
 

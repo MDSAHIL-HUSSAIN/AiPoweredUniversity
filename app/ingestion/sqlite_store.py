@@ -1,6 +1,7 @@
 import json
 import sqlite3
 from datetime import date
+from pathlib import Path
 
 from app.contracts.documents import SourceRegisterEntry
 
@@ -12,6 +13,7 @@ class SQLiteStore:
         self._initialize_database()
 
     def _initialize_database(self) -> None:
+        Path(self.db_path).parent.mkdir(parents=True, exist_ok=True)
         with sqlite3.connect(self.db_path) as conn:
             conn.execute(
                 """
@@ -70,11 +72,6 @@ class SQLiteStore:
                     source.doc_type,
                     source.version,
                     source.effective_from.isoformat(),
-                    (
-                        source.effective_from.isoformat()
-                        if source.effective_from
-                        else None
-                    ),
                     (
                         source.effective_to.isoformat()
                         if source.effective_to

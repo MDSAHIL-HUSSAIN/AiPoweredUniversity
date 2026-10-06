@@ -25,6 +25,9 @@ class WorkflowSettings(BaseSettings):
     llm_timeout_seconds: float = Field(default=60.0, gt=0)
     router_max_attempts: int = Field(default=2, ge=1, le=3)
     top_k: int = Field(default=5, ge=1, le=20)
+    sqlite_path: str = "./data/runtime/university.db"
+    chroma_path: str = "./data/runtime/chroma"
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
     log_level: str = "INFO"
 
 

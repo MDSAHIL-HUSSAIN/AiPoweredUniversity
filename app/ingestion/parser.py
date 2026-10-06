@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import Path
 import os
+import shutil
 
 import pymupdf  # PyMuPDF
 from PIL import Image
@@ -18,6 +19,14 @@ MIN_TEXT_LENGTH = 50
 
 def _ocr_page(page: pymupdf.Page) -> str:
     """Extract text from a PDF page using OCR."""
+    configured = os.getenv("TESSERACT_CMD")
+    executable = configured or shutil.which("tesseract")
+    if not executable:
+        raise RuntimeError(
+            "This PDF page needs OCR, but Tesseract is not installed. "
+            "Install Tesseract and optionally set TESSERACT_CMD to its executable."
+        )
+    pytesseract.pytesseract.tesseract_cmd = executable
     pixmap = page.get_pixmap(matrix=pymupdf.Matrix(2, 2), alpha=False)
 
     image = Image.frombytes(
@@ -44,12 +53,8 @@ def parse_pdf(file_path: str | Path) -> list[PageText]:
     if file_path.suffix.lower() != ".pdf":
         raise ValueError("Input file must be a PDF.")
 
-    # Optional Windows Tesseract configuration
-    tesseract_cmd = os.getenv("TESSERACT_CMD")
-    if tesseract_cmd:
-        pytesseract.pytesseract.tesseract_cmd = tesseract_cmd
-
     pages: list[PageText] = []
+    ocr_unavailable = False
 
     with pymupdf.open(file_path) as document:
         for page_number, page in enumerate(document, start=1):
@@ -58,7 +63,13 @@ def parse_pdf(file_path: str | Path) -> list[PageText]:
 
             # OCR fallback for scanned/image-heavy pages
             if len(text) < MIN_TEXT_LENGTH:
-                text = _ocr_page(page)
+                try:
+                    ocr_text = _ocr_page(page)
+                    text = ocr_text or text
+                except RuntimeError:
+                    # Keep any embedded text and skip truly image-only/blank pages.
+                    # If every page needs OCR, report the missing dependency below.
+                    ocr_unavailable = True
 
             if text:
                 pages.append(
@@ -69,6 +80,11 @@ def parse_pdf(file_path: str | Path) -> list[PageText]:
                 )
 
     if not pages:
+        if ocr_unavailable:
+            raise RuntimeError(
+                "This PDF needs OCR, but Tesseract is not installed. Install "
+                "Tesseract and optionally set TESSERACT_CMD to its executable."
+            )
         raise ValueError(
             f"No text could be extracted from PDF: {file_path}"
         )

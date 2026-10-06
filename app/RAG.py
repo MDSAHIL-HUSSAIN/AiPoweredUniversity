@@ -17,7 +17,12 @@ class RAGEngine:
     Enforces Rule R1, R2, R3, R11.
     """
 
-    def __init__(self, persist_dir: str = "chroma_db", seed_defaults: bool = True):
+    def __init__(
+        self,
+        persist_dir: str = "chroma_db",
+        seed_defaults: bool = True,
+        use_chroma: bool = True,
+    ):
         self.persist_dir = persist_dir
         self.documents_store: Dict[str, Dict[str, Any]] = {}
         self.chunks_store: List[Dict[str, Any]] = []
@@ -25,7 +30,7 @@ class RAGEngine:
         chroma_disabled = os.getenv("CHROMA_DISABLED", "false").lower() in {
             "1", "true", "yes", "on"
         }
-        if HAS_CHROMADB and not chroma_disabled:
+        if HAS_CHROMADB and use_chroma and not chroma_disabled:
             self.client = chromadb.PersistentClient(path=self.persist_dir)
             self.collection = self.client.get_or_create_collection(name="university_docs")
         else:

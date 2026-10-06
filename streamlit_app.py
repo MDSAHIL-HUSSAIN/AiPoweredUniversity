@@ -155,7 +155,7 @@ with tab_ingest:
     st.write("Ingest new official regulations, circulars, or policies while system is running.")
 
     with st.form("ingest_form"):
-        uploaded_file = st.file_uploader("Upload Policy Document (TXT / PDF)", type=["txt", "pdf", "md"])
+        uploaded_file = st.file_uploader("Upload Policy Document (PDF)", type=["pdf"])
         doc_id_in = st.text_input("Document ID (PK):", value="ACAD-CIRCULAR-2026-09")
         title_in = st.text_input("Title:", value="Circular on Examination Conduct & Fair Practices")
         issuer_in = st.text_input("Issuer:", value="Controller of Examinations")
@@ -183,7 +183,7 @@ with tab_ingest:
             "synthetic": "Y"
         }
 
-        files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "text/plain")}
+        files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
         data = {"metadata": json.dumps(meta_dict)}
 
         with st.spinner("Indexing into ChromaDB vector store..."):

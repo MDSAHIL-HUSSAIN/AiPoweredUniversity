@@ -196,6 +196,7 @@ class UniversityRetriever:
             scope_batches=self._parse_list(
                 source.get("scope_batches")
             ),
+            provenance=source.get("provenance"),
             synthetic=bool(
                 source.get("synthetic", False)
             ),

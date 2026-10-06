@@ -34,11 +34,7 @@ class RetrievedChunk(BaseModel):
 
     @model_validator(mode="after")
     def validate_effective_window(self) -> "RetrievedChunk":
-        if (
-            self.effective_from
-            and self.effective_to
-            and self.effective_to < self.effective_from
-        ):
+        if self.effective_to and self.effective_to < self.effective_from:
             raise ValueError("effective_to cannot be before effective_from")
         return self
 
@@ -49,7 +45,7 @@ class SourceRegisterEntry(BaseModel):
     authority_level: int = Field(ge=1, le=5)
     doc_type: str
     version: str
-    effective_from: date | None = None
+    effective_from: date
     effective_to: date | None = None
     supersedes: list[str] = Field(default_factory=list)
     scope_programmes: list[str] = Field(default_factory=lambda: ["ALL"])

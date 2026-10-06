@@ -52,9 +52,31 @@ After installing the requirements, the merged API and UI can run without Docker:
 ```powershell
 .\scripts\run_dev.ps1            # deterministic mock mode
 .\scripts\run_dev.ps1 -RealLlm   # local Ollama mode
+.\scripts\run_dev.ps1 -RealLlm -RealRetrieval  # Ollama + persistent BGE/Chroma
 ```
 
 Docker is an optional reproducible demo path: `docker compose up --build`.
+
+## University document ingestion
+
+The public NSUT PDFs and normalized source register are in `data/documents` and
+`data/source_register.csv`. Rebuild them from the team workbook with:
+
+```powershell
+python scripts/download_source_documents.py --workbook "C:\path\to\sheet1.xlsx"
+```
+
+Build the persistent Chroma index and SQLite source register before using real
+retrieval. The first run downloads the configured BGE embedding model:
+
+```powershell
+python -m scripts.ingest_source_documents
+```
+
+Use `--lightweight` to validate PDF extraction without downloading an embedding
+model. Scanned pages require the Tesseract executable; on Windows install
+Tesseract and set `TESSERACT_CMD` if it is not on `PATH`. The Docker image already
+includes Tesseract.
 
 ## Integration boundaries
 

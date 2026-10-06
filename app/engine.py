@@ -15,6 +15,16 @@ from app.contracts import (
     RetrievedSourceAudit,
     RetrievalFilters,
 )
+from app.ingestion import (
+    ChromaStore,
+    Chunker,
+    DeterministicEmbeddingService,
+    EmbeddingService,
+    InMemoryChromaStore,
+    IngestionService,
+    SQLiteStore,
+    UniversityRetriever,
+)
 from app.repositories.audit_repository import AuditRepository
 from app.repositories.db import get_conn
 from app.tools import UniversityTools, call_tool
@@ -69,14 +79,59 @@ class RAGRetrieverAdapter:
         return chunks
 
 
+class PrimaryWithFallbackRetriever:
+    """Use Member 2's index, retaining demo evidence only while it is empty."""
+
+    def __init__(self, primary, vector_store, fallback) -> None:
+        self.primary = primary
+        self.vector_store = vector_store
+        self.fallback = fallback
+
+    def retrieve(self, query, filters, top_k=5):
+        if self.vector_store.count() == 0:
+            return self.fallback.retrieve(query, filters, top_k)
+        return self.primary.retrieve(query, filters, top_k)
+
+
 class AssistantEngine:
     """Own runtime dependencies and expose one async question-processing method."""
 
     def __init__(self, settings: WorkflowSettings | None = None) -> None:
         self.settings = settings or WorkflowSettings()
-        self.conn = get_conn()
+        self.conn = get_conn(self.settings.sqlite_path)
+        lightweight_retrieval = _env_bool("CHROMA_DISABLED", default=False)
+        self.vector_store = (
+            InMemoryChromaStore()
+            if lightweight_retrieval
+            else ChromaStore(self.settings.chroma_path)
+        )
+        self.embedding_service = (
+            DeterministicEmbeddingService()
+            if lightweight_retrieval
+            else EmbeddingService(self.settings.embedding_model)
+        )
+        self.source_store = SQLiteStore(self.settings.sqlite_path)
+        self.ingestion_service = IngestionService(
+            chunker=Chunker(),
+            embedding_service=self.embedding_service,
+            chroma_store=self.vector_store,
+            sqlite_store=self.source_store,
+        )
+        self.primary_retriever = UniversityRetriever(
+            chroma_store=self.vector_store,
+            sqlite_store=self.source_store,
+            embedding_service=self.embedding_service,
+        )
+        # Temporary evidence is used only until Member 2's index has documents.
         self.rag_engine = RAGEngine(
-            persist_dir=os.getenv("CHROMA_PATH", "./data/runtime/chroma")
+            persist_dir=self.settings.chroma_path,
+            use_chroma=False,
+        )
+        fallback_retriever = RAGRetrieverAdapter(self.rag_engine)
+        self.retriever = PrimaryWithFallbackRetriever(
+            self.primary_retriever,
+            self.vector_store,
+            fallback_retriever,
         )
         llm = (
             MockWorkflowLLM()
@@ -88,7 +143,7 @@ class AssistantEngine:
         self.graph = build_workflow(
             llm=llm,
             authorizer=HeaderAuthorizer(),
-            retriever=RAGRetrieverAdapter(self.rag_engine),
+            retriever=self.retriever,
             tool_executor=CallToolExecutor(UniversityTools(self.conn), call_tool),
             top_k=self.settings.top_k,
         )
@@ -159,6 +214,13 @@ class AssistantEngine:
         ok, _ = await self.llm.health_check()
         return ok
 
+    def vector_health(self) -> bool:
+        try:
+            self.vector_store.count()
+            return True
+        except Exception:
+            return False
+
 
 def _optional_date(value) -> date | None:
     if not value:
@@ -174,3 +236,10 @@ def _list_value(value, default=None) -> list[str]:
     if isinstance(value, list):
         return [str(item) for item in value]
     return [item.strip() for item in str(value).split(";") if item.strip()]
+
+
+def _env_bool(name: str, *, default: bool) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}

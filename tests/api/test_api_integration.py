@@ -2,6 +2,8 @@ import json
 import os
 from pathlib import Path
 
+import pymupdf
+
 os.environ["MOCK_LLM"] = "true"
 os.environ["CHROMA_DISABLED"] = "true"
 os.environ["SQLITE_PATH"] = str(Path(".tmp/api-integration.db"))
@@ -50,7 +52,7 @@ def test_personal_question_uses_header_and_real_tool():
         assert body["tools_invoked"][0]["tool"] == "check_exam_eligibility"
 
 
-def test_ingest_text_and_list_source():
+def test_ingest_pdf_and_list_source():
     metadata = {
         "doc_id": "TEST-NOTICE-1",
         "title": "Test Notice",
@@ -62,10 +64,15 @@ def test_ingest_text_and_list_source():
         "provenance": "API integration test",
         "synthetic": True,
     }
+    document = pymupdf.open()
+    page = document.new_page()
+    page.insert_text((72, 72), "Section 1: Test policy text for university students.")
+    pdf_bytes = document.tobytes()
+    document.close()
     with TestClient(app) as client:
         response = client.post(
             "/ingest",
-            files={"file": ("notice.txt", b"Section 1\nTest policy text.", "text/plain")},
+            files={"file": ("notice.pdf", pdf_bytes, "application/pdf")},
             data={"metadata": json.dumps(metadata)},
         )
         assert response.status_code == 200

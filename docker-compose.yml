@@ -13,6 +13,8 @@ services:
       - MOCK_LLM=${MOCK_LLM:-false}
       - SQLITE_PATH=/app/data/runtime/university.db
       - CHROMA_PATH=/app/data/runtime/chroma
+      - CHROMA_DISABLED=false
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-BAAI/bge-small-en-v1.5}
     extra_hosts:
       - "host.docker.internal:host-gateway"
     volumes:

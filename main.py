@@ -2,8 +2,10 @@
 
 import json
 import os
+import tempfile
 from contextlib import asynccontextmanager
 from datetime import date
+from pathlib import Path
 
 from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
@@ -84,25 +86,27 @@ async def ingest_document(
         raise HTTPException(status_code=400, detail=f"Invalid ingestion metadata: {exc}")
 
     contents = await file.read()
-    try:
-        text = contents.decode("utf-8")
-    except UnicodeDecodeError:
+    if not file.filename or Path(file.filename).suffix.lower() != ".pdf":
         raise HTTPException(
             status_code=415,
-            detail="This integration accepts UTF-8 text; PDF/OCR is supplied by Member 2.",
+            detail="The ingestion pipeline accepts PDF documents.",
         )
+    if len(contents) > 20 * 1024 * 1024:
+        raise HTTPException(status_code=413, detail="PDF exceeds the 20 MB upload limit.")
+
     metadata_dict = ingest_metadata.model_dump(mode="json")
-    chunks = engine.rag_engine.ingest_document(
-        ingest_metadata.doc_id,
-        text,
-        metadata_dict,
-    )
-    sources.save(
-        SourceRegisterEntry(
-            **metadata_dict,
-            retrieved_on=date.today(),
-        )
-    )
+    source = SourceRegisterEntry(**metadata_dict, retrieved_on=date.today())
+    temporary_path = None
+    try:
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as temporary:
+            temporary.write(contents)
+            temporary_path = temporary.name
+        chunks = engine.ingestion_service.ingest(temporary_path, source)
+    except (ValueError, RuntimeError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    finally:
+        if temporary_path:
+            Path(temporary_path).unlink(missing_ok=True)
     return IngestResponse(
         doc_id=ingest_metadata.doc_id,
         chunks_indexed=chunks,
@@ -118,7 +122,7 @@ async def health():
     except Exception:
         sqlite_ok = False
     llm_ok = await engine.llm_health()
-    vector_ok = engine.rag_engine is not None
+    vector_ok = engine.vector_health()
     return HealthResponse(
         status="ok" if sqlite_ok and vector_ok and llm_ok else "degraded",
         api=True,
