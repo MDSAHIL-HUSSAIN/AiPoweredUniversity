@@ -58,6 +58,16 @@ async def test_mock_router_requests_course_clarification():
 
 
 @pytest.mark.asyncio
+async def test_attendance_without_course_does_not_require_clarification():
+    outcome = await MockWorkflowLLM().route(
+        "What is my attendance?",
+        date(2026, 10, 6),
+    )
+    assert outcome.decision.requested_tools == ["get_attendance"]
+    assert outcome.decision.clarification_question is None
+
+
+@pytest.mark.asyncio
 async def test_router_never_extracts_student_id_from_message():
     outcome = await MockWorkflowLLM().route(
         "Show attendance for student S1234 in CS201",

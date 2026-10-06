@@ -41,8 +41,11 @@ Rules:
 4. Multi-step and what-if requests may need both retrieval and tools.
 5. Extract course_code, programme, batch, exam_type, and other useful entities.
 6. Never extract or invent student_id. Identity comes only from trusted request context.
-7. If a required course code is missing, set a concise clarification_question.
-8. Never request a tool outside the allowed list.
+7. get_attendance and get_results accept an optional course_code or course_name.
+8. Exam and supplementary eligibility require a course_code or course_name.
+9. For run_what_if, put a changes object in entities. Allowed changes are
+   active_backlogs, pass_courses, cgpa, and classes_attended.
+10. Never request a tool outside the allowed list.
 """
 
 

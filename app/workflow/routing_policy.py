@@ -17,7 +17,6 @@ _EMPTY_ENTITY_VALUES = {
     "n/a",
 }
 _COURSE_TOOLS = {
-    "get_attendance",
     "check_exam_eligibility",
     "check_supplementary_eligibility",
 }

@@ -8,3 +8,8 @@ not_answerable.
 Tools: get_attendance, get_results, check_exam_eligibility,
 check_supplementary_eligibility, check_placement_eligibility, run_what_if.
 
+get_attendance and get_results accept an optional course code or course name.
+Exam and supplementary eligibility require a course. For run_what_if, extract a
+changes object using only active_backlogs, pass_courses, cgpa, and
+classes_attended. Student identity never belongs in tool arguments.
+
