@@ -1,10 +1,11 @@
 """Deterministic LLM replacement for local and integration testing."""
 
+import json
 import re
 from datetime import date
 
-from app.contracts import QuestionCategory, RouteDecision
-from app.workflow.llm.base import RouteOutcome
+from app.contracts import Conflict, QuestionCategory, RetrievedChunk, RouteDecision, ToolResult
+from app.workflow.llm.base import ComposeOutcome, DraftAnswer, RouteOutcome
 from app.workflow.routing_policy import normalize_route_decision
 
 
@@ -29,6 +30,49 @@ class MockWorkflowLLM:
             model_name=self.model_name,
         )
 
+    async def compose(
+        self,
+        question: str,
+        as_of_date: date,
+        current_evidence: list[RetrievedChunk],
+        upcoming_changes: list[RetrievedChunk],
+        tool_results: list[ToolResult],
+        conflicts: list[Conflict],
+    ) -> ComposeOutcome:
+        del question, as_of_date
+        unresolved = [conflict for conflict in conflicts if not conflict.resolved]
+        cited = [chunk.chunk_id for chunk in current_evidence]
+
+        if unresolved:
+            answer = "The available university sources conflict, so no single rule can be selected."
+            answer_type = "conflict_flagged"
+        elif tool_results:
+            outputs = [result.output for result in tool_results]
+            answer = "Deterministic result: " + json.dumps(outputs, default=str)
+            answer_type = "calculated"
+        elif current_evidence:
+            answer = " ".join(chunk.text for chunk in current_evidence)
+            if upcoming_changes:
+                answer += " Upcoming change: " + " ".join(
+                    chunk.text for chunk in upcoming_changes
+                )
+                cited.extend(chunk.chunk_id for chunk in upcoming_changes)
+            answer_type = "retrieved_fact"
+        else:
+            answer = "I could not find this information in the available university sources."
+            answer_type = "not_found"
+            cited = []
+
+        return ComposeOutcome(
+            draft=DraftAnswer(
+                answer=answer,
+                answer_type=answer_type,
+                citation_chunk_ids=list(dict.fromkeys(cited)),
+                explanation="Answer composed only from retrieved evidence and tool outputs.",
+            ),
+            attempts=0,
+            model_name=self.model_name,
+        )
     @staticmethod
     def route_deterministically(question: str) -> RouteDecision:
         normalized = " ".join(question.lower().split())

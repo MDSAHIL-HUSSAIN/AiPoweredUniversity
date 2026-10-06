@@ -7,6 +7,7 @@ from app.contracts import QuestionCategory, RouteDecision
 
 
 _COURSE_CODE = re.compile(r"\b[A-Z]{2,4}\d{3}\b")
+_STUDENT_ID = re.compile(r"\bS\d{4,}\b")
 _EMPTY_ENTITY_VALUES = {
     "",
     "unknown",
@@ -56,8 +57,21 @@ def normalize_route_decision(
     tools = list(dict.fromkeys(decision.requested_tools))
     needs_retrieval = decision.needs_retrieval
     needs_tools = decision.needs_student_tools
+    mentions_student = bool(_STUDENT_ID.search(question.upper()))
+    private_data_request = mentions_student and any(
+        term in normalized
+        for term in ("attendance", "marks", "result", "grade", "cgpa", "backlog")
+    )
 
-    if category == QuestionCategory.ELIGIBILITY:
+    if private_data_request:
+        category = QuestionCategory.PERSONAL_DATA
+        needs_retrieval = False
+        needs_tools = True
+        if "attendance" in normalized:
+            tools = ["get_attendance"]
+        else:
+            tools = ["get_results"]
+    elif category == QuestionCategory.ELIGIBILITY:
         needs_retrieval = True
         needs_tools = True
         if "placement" in normalized:

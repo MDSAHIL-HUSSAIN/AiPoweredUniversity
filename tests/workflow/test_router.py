@@ -77,6 +77,17 @@ async def test_router_never_extracts_student_id_from_message():
 
 
 @pytest.mark.asyncio
+async def test_explicit_student_marks_are_always_personal_data():
+    outcome = await MockWorkflowLLM().route(
+        "Show me the marks of S1006.",
+        date(2026, 10, 6),
+    )
+
+    assert outcome.decision.category == QuestionCategory.PERSONAL_DATA
+    assert outcome.decision.requested_tools == ["get_results"]
+
+
+@pytest.mark.asyncio
 async def test_ollama_adapter_retries_then_succeeds():
     expected = RouteDecision(
         category=QuestionCategory.PROCEDURE,
