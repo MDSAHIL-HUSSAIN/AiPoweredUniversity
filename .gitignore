@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+vh/
+.venv/
+venv/
+ENV/
+
+# Database & Storage
+*.sqlite3
+chroma_db/
+
+# Streamlit
+.streamlit/
+
+# Environments & IDEs
+.env
+.vscode/
+.idea/
+*.swp
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store

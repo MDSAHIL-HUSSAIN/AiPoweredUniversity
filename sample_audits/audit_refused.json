@@ -1,0 +1,19 @@
+{
+  "trace_id": "9c8d7e6f",
+  "timestamp": "2026-10-06T14:22:05Z",
+  "student_id": "S1001",
+  "question": "What is S1002's attendance in CS201?",
+  "question_category": "privacy_refusal",
+  "sources_retrieved": [],
+  "precedence_decision": null,
+  "tools_invoked": [],
+  "applied_rules": [],
+  "conflicts_detected": [],
+  "answer": "Request refused: You are authenticated as 'S1001' and cannot access records for student 'S1002'.",
+  "answer_type": "refused",
+  "explanation": "Rule R7 Authorisation & Privacy Enforcement: Student identity comes strictly from the X-Student-Id request header. Cross-student data queries are forbidden.",
+  "model": "llama3.1:8b",
+  "llm_calls": 0,
+  "tokens": 120,
+  "latency_ms": 15
+}
