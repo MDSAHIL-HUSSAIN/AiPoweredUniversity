@@ -1,0 +1,51 @@
+{
+  "trace_id": "7f3c2a9e",
+  "timestamp": "2026-10-06T14:02:11Z",
+  "student_id": "S1001",
+  "question": "Am I eligible to appear in the end-semester exam for CS201?",
+  "question_category": "personal_eligibility",
+  "sources_retrieved": [
+    {
+      "doc_id": "ACAD-REG-2024",
+      "section": "7.2",
+      "score": 0.82
+    },
+    {
+      "doc_id": "ACAD-2026-08",
+      "section": "1",
+      "score": 0.79
+    }
+  ],
+  "precedence_decision": "ACAD-2026-08 supersedes ACAD-REG-2024#7.2 (step 2)",
+  "tools_invoked": [
+    {
+      "tool": "get_attendance",
+      "status": "ok",
+      "ms": 4,
+      "input": {"student_id": "S1001", "course_code": "CS201"},
+      "output": {"classes_held": 40, "classes_attended": 31, "attendance_pct": 77.5}
+    },
+    {
+      "tool": "check_exam_eligibility",
+      "status": "ok",
+      "ms": 2,
+      "input": {"student_id": "S1001", "course_code": "CS201", "min_required_pct": 75.0},
+      "output": {"result": "ELIGIBLE", "rule_id": "ATT-MIN-01", "attendance_pct": 77.5, "required_pct": 75.0}
+    }
+  ],
+  "applied_rules": [
+    {
+      "rule_id": "ATT-MIN-01",
+      "value": ">=75%",
+      "source_doc_id": "ACAD-REG-2024"
+    }
+  ],
+  "conflicts_detected": [],
+  "answer": "You are eligible to appear in the end-semester exam for CS201.",
+  "answer_type": "calculated",
+  "explanation": "Your attendance in CS201 is 77.5%, which is above the 75% minimum threshold in clause 7.2 of ACAD-REG-2024.",
+  "model": "llama3.1:8b",
+  "llm_calls": 1,
+  "tokens": 2140,
+  "latency_ms": 320
+}

@@ -26,4 +26,5 @@ data/runtime/
 Thumbs.db
 .idea/
 .vscode/
+.streamlit/
 

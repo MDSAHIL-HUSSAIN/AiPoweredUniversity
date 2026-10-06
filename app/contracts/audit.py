@@ -22,6 +22,7 @@ class AuditRecord(BaseModel):
     trace_id: str
     timestamp: datetime
     student_id: str | None = None
+    question: str
     question_category: str
     sources_retrieved: list[RetrievedSourceAudit] = Field(default_factory=list)
     precedence_decision: str | None = None
@@ -29,6 +30,8 @@ class AuditRecord(BaseModel):
     tools_invoked: list[ToolInvocation] = Field(default_factory=list)
     applied_rules: list[AppliedRule] = Field(default_factory=list)
     answer_type: str
+    answer: str
+    explanation: str
     model: str | None = None
     llm_calls: int = Field(default=0, ge=0)
     tokens: int | None = Field(default=None, ge=0)

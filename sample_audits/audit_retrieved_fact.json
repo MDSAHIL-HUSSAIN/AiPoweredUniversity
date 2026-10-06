@@ -1,0 +1,31 @@
+{
+  "trace_id": "8a4b1c2d",
+  "timestamp": "2026-10-06T14:15:30Z",
+  "student_id": null,
+  "question": "What is the minimum attendance required to appear for end-semester exams?",
+  "question_category": "policy_fact",
+  "sources_retrieved": [
+    {
+      "doc_id": "ACAD-REG-2024",
+      "section": "7.2",
+      "score": 0.94
+    }
+  ],
+  "precedence_decision": "Standard policy retrieval without active supersession scope",
+  "tools_invoked": [],
+  "applied_rules": [
+    {
+      "rule_id": "ATT-MIN-01",
+      "value": ">=75%",
+      "source_doc_id": "ACAD-REG-2024"
+    }
+  ],
+  "conflicts_detected": [],
+  "answer": "Every student is required to attend a minimum of 75% of the total classes held in each course during the semester to be eligible to appear in the end-semester regular examination.",
+  "answer_type": "retrieved_fact",
+  "explanation": "Answer retrieved directly from ACAD-REG-2024 section 7.2.",
+  "model": "llama3.1:8b",
+  "llm_calls": 1,
+  "tokens": 850,
+  "latency_ms": 180
+}

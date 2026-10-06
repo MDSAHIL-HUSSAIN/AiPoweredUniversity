@@ -47,6 +47,15 @@ Member 4's API/engine integration contract, Docker host configuration, supported
 model overrides, and compatibility facade are documented in
 [`docs/ollama_integration.md`](docs/ollama_integration.md).
 
+After installing the requirements, the merged API and UI can run without Docker:
+
+```powershell
+.\scripts\run_dev.ps1            # deterministic mock mode
+.\scripts\run_dev.ps1 -RealLlm   # local Ollama mode
+```
+
+Docker is an optional reproducible demo path: `docker compose up --build`.
+
 ## Integration boundaries
 
 Shared Pydantic models live in `app/contracts`. Change them only through a pull

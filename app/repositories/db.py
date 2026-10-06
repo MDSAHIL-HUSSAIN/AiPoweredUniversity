@@ -63,6 +63,23 @@ CREATE TABLE IF NOT EXISTS audit_log (
     student_id TEXT,
     record_json TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS source_register (
+    doc_id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    issuer TEXT NOT NULL,
+    authority_level INTEGER NOT NULL,
+    doc_type TEXT NOT NULL,
+    version TEXT NOT NULL,
+    effective_from TEXT NOT NULL,
+    effective_to TEXT,
+    supersedes TEXT NOT NULL DEFAULT '[]',
+    scope_programmes TEXT NOT NULL DEFAULT '["ALL"]',
+    scope_batches TEXT NOT NULL DEFAULT '["ALL"]',
+    provenance TEXT NOT NULL,
+    retrieved_on TEXT NOT NULL,
+    synthetic INTEGER NOT NULL DEFAULT 0
+);
 """
 
 TABLE_COLUMNS = {
