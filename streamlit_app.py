@@ -175,12 +175,12 @@ with tab_ingest:
             "doc_type": doc_type_in,
             "version": version_in,
             "effective_from": eff_from_in,
-            "effective_to": "",
-            "supersedes": "",
-            "scope_programmes": "ALL",
-            "scope_batches": "ALL",
+            "effective_to": None,
+            "supersedes": [],
+            "scope_programmes": ["ALL"],
+            "scope_batches": ["ALL"],
             "provenance": "Streamlit Live Upload",
-            "synthetic": "Y"
+            "synthetic": True,
         }
 
         files = {"file": (uploaded_file.name, uploaded_file.getvalue(), "application/pdf")}
