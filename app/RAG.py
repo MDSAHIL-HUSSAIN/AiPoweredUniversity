@@ -39,28 +39,28 @@ class RAGEngine:
         """Seed initial official documents into the RAG vector index."""
         doc1_text = """
         [DOC_ID: NSUT-20260422-ATT75, TITLE: Attendance Requirements Notice, ISSUER: Office of Dean (Academics), AUTHORITY: 1, VERSION: 1.0, EFFECTIVE_FROM: 2024-07-01]
-        
+
         Section 7.2 Attendance Minimum Requirement:
         Every student is required to attend a minimum of 75% of the total classes held in each course during the semester to be eligible to appear in the end-semester regular examination.
-        
+
         Section 7.3 Attendance Condonation:
         The Dean (Academics) may condone attendance shortfall up to a maximum of 10% (i.e. between 65% and 74.9%) on genuine medical grounds supported by a valid medical certificate submitted within 7 days of illness.
-        
+
         """
 
         doc2_text = """
         [DOC_ID: ACAD-CIRC-2026-08-SYN, TITLE: Revised Attendance Circular, ISSUER: Dean (Academics), AUTHORITY: 1, VERSION: 1.0, EFFECTIVE_FROM: 2026-08-01, SUPERSEDES: NSUT-20260422-ATT75]
-        
+
         Clause 1 Special Attendance Relief:
         The minimum attendance threshold required for end-semester exam eligibility is revised to 80 percent. This clause supersedes the earlier 75 percent attendance notice.
         """
 
         doc3_text = """
         [DOC_ID: TNP-POLICY-2024, TITLE: Training and Placement Policy, ISSUER: Training & Placement Cell, AUTHORITY: 2, VERSION: 1.0, EFFECTIVE_FROM: 2024-07-01]
-        
+
         Clause 3.1 CGPA Cutoff:
         Students participating in campus placement drives must maintain a minimum cumulative grade point average (CGPA) of 6.50 at the end of the 6th semester.
-        
+
         Clause 3.2 Backlog Restrictions:
         Students having any active backlogs at the time of placement registration shall not be permitted to register or appear for company interviews.
         """
@@ -171,7 +171,7 @@ class RAGEngine:
     def query(self, query_text: str, top_k: int = 3) -> List[Dict[str, Any]]:
         """Retrieves top_k relevant chunks with similarity score."""
         results = []
-        
+
         if HAS_CHROMADB and self.collection:
             try:
                 chroma_res = self.collection.query(

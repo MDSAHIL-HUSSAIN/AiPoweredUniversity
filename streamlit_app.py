@@ -61,7 +61,7 @@ with tab_chat:
     # Quick Sample Questions
     st.markdown("##### 🚀 Quick Test Scenarios")
     col1, col2, col3 = st.columns(3)
-    
+
     selected_sample = None
     with col1:
         if st.button("1. Policy Fact", help="General attendance requirement"):
@@ -97,7 +97,7 @@ with tab_chat:
                 resp = requests.post(f"{API_BASE_URL}/ask", json=payload, headers=headers, timeout=10)
                 if resp.status_code == 200:
                     data = resp.json()
-                    
+
                     st.markdown("---")
                     # Color-coded answer type badge
                     atype = data["answer_type"]

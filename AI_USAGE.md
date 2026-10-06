@@ -1,9 +1,9 @@
 # AI-Usage Disclosure Statement
 
-**Project**: AI-Powered University Student Services Assistant  
-**Event**: HCLTech | Future Ready AI Engineer Hackathon 2026 (NSUT, Delhi)  
-**Member**: Member 4 (API + Infra + UI)  
-**Date**: 6 October 2026  
+**Project**: AI-Powered University Student Services Assistant
+**Event**: HCLTech | Future Ready AI Engineer Hackathon 2026 (NSUT, Delhi)
+**Member**: Member 4 (API + Infra + UI)
+**Date**: 6 October 2026
 
 ---
 
@@ -16,11 +16,11 @@ In accordance with Section 8 & Section 10 of the Hackathon Participant Guide, AI
 
 | Component / Subsystem | AI Assistance Used | Verification Method & Quality Checks |
 | :--- | :--- | :--- |
-| **FastAPI Endpoints & Pydantic v2 Models** (`main.py`, `app/models.py`) | Initial boilerplate generation for Pydantic v2 schemas and FastAPI route handler signatures. | Verified exact JSON payload structures against Section 6.1 specification using `curl` commands and FastAPI OpenAPI docs (`/docs`). Checked strict field typing and default value generators. |
-| **Auth Node & Privacy Refusal Engine** (`app/auth.py`) | Pattern matching logic for regex extraction of `X-Student-Id` headers and prompt injection keyword list. | Verified Rule R7 compliance by sending requests without headers, with matching headers, and with mismatched student IDs (`S1001` requesting `S1002`). Confirmed return of `answer_type: "refused"`. |
-| **Audit Service & Annex D Logger** (`app/audit.py`) | Trace ID hex generator and Annex D JSON format dictionary structure. | Verified `GET /audit/{trace_id}` endpoint returns complete metadata including sources retrieved, tools invoked, latency, model, and token count. Validated against `sample_audits/*.json`. |
-| **Deterministic Tools & SQLite Database** (`app/tools.py`, `app/database.py`) | SQL schema creation scripts for Annex C tables and SQLite row mapping. | Tested threshold boundary cases (S1001 with 77.5%, S1007 with exact 75.0%, S1002 with 70.0% failure, S1004 detained). Ensured zero LLM arithmetic was used in calculations. |
-| **Source Precedence Policy Engine** (`app/precedence.py`) | Step 1-5 resolution ordering logic for Annex A precedence policy. | Executed test queries comparing `ACAD-REG-2024` clause 7.2 vs superseding circular `ACAD-2026-08` clause 1 for B.Tech CSE 2023 batch. |
+| **FastAPI Endpoints & Pydantic v2 Models** (`main.py`, `app/contracts/`) | Initial boilerplate generation for Pydantic v2 schemas and FastAPI route handler signatures. | Verified payload structures with integration tests and FastAPI OpenAPI docs (`/docs`). Checked strict field typing and default value generators. |
+| **Auth Node & Privacy Refusal Engine** (`app/auth/authorizer.py`) | Header identity and cross-student privacy checks. | Verified Rule R7 compliance with missing, matching, and mismatched student identities. Confirmed `answer_type: "refused"`. |
+| **Audit Service & Annex D Logger** (`app/repositories/audit_repository.py`) | Audit persistence and Annex D record mapping. | Verified `GET /audit/{trace_id}` returns sources, tools, latency, model, tokens, fallback status, and errors. |
+| **Deterministic Tools & SQLite Database** (`app/tools/`, `app/repositories/`) | Member 1 implementation integrated into the API. | Tested boundary cases and ensured zero LLM arithmetic was used for eligibility decisions. |
+| **Source Precedence Policy Engine** (`app/workflow/precedence.py`) | Member 3 Annex A implementation integrated into the API. | Verified applicability, supersession, authority, recency, upcoming rules, and unresolved conflicts. |
 | **Streamlit UI Dashboard** (`streamlit_app.py`) | Streamlit layout layout widgets, CSS formatting, and tabs configuration. | Interactively tested all 6 query scenarios in the browser UI, ensuring response badge colors, citations, tools invoked, and audit trace viewers render correctly. |
 
 ---

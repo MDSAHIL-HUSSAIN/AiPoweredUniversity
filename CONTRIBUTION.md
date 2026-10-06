@@ -1,8 +1,8 @@
 # Team Contribution Statement & Declaration of Original Work
 
-**Project**: AI-Powered University Student Services Assistant  
-**Event**: HCLTech | Future Ready AI Engineer Hackathon 2026 (NSUT, Delhi)  
-**Date**: 6 October 2026  
+**Project**: AI-Powered University Student Services Assistant
+**Event**: HCLTech | Future Ready AI Engineer Hackathon 2026 (NSUT, Delhi)
+**Date**: 6 October 2026
 
 ---
 
@@ -10,9 +10,9 @@
 
 | Team Member | Module & Responsibility | Key Deliverables & Contributions |
 | :--- | :--- | :--- |
-| **Member 1** | **RAG & Knowledge Retrieval** | Ingested university documents into ChromaDB vector store; implemented MiniLM text embeddings, chunking strategy, citation mapping, and abstention handling (`answer_type: "not_found"`). |
-| **Member 2** | **Deterministic Tools & SQLite Database** | Implemented Annex C SQLite database tables (`students`, `courses`, `attendance`, `results`, `rule_registry`); created deterministic calculation tools (`get_attendance`, `check_exam_eligibility`, `check_placement_eligibility`); synthetic student data kit. |
-| **Member 3** | **LangGraph Orchestration & Precedence Policy** | Implemented Annex A Source Precedence Policy engine (authority levels 1-5, applicability, explicit supersession, recency); built decision workflow for multi-step & what-if queries. |
+| **Member 1** | **Data, Rules, Tools & Evaluation** | Implemented synthetic datasets, Annex C SQLite tables, rule registry, deterministic tools, edge cases, evaluation set, and data card. |
+| **Member 2** | **Documents, Ingestion & Retrieval** | Owns source collection, source register, OCR/text extraction, section chunking, embeddings, ChromaDB retrieval, metadata filters, and retrieval configuration evaluation. |
+| **Member 3** | **LangGraph & Local LLM** | Implemented typed routing, authorization/tool orchestration, Annex A precedence, evidence-only composition, citation validation, Ollama/mock modes, fallback behavior, and graph wiring. |
 | **Member 4** *(Current Role)* | **API + Infra + Auth + Audit + Streamlit UI + Documentation** | • **FastAPI Backend**: Implemented all 5 mandatory Section 6 endpoints (`POST /ask`, `POST /ingest`, `GET /health`, `GET /audit/{trace_id}`, `GET /sources`) and student loader endpoint.<br>• **Auth Node**: Enforced Rule R7 header authorization (`X-Student-Id`), privacy refusal logic (`answer_type: "refused"`), and R8 prompt injection guard.<br>• **Audit Node**: Implemented Rule R10 auditability service generating Annex D compliant JSON records for every trace ID.<br>• **Streamlit UI**: Built interactive web application with student session switcher, date picker, quick test scenario buttons, answer badges, citations/tools viewer, live ingestion form, source register table, and audit log inspector.<br>• **Infrastructure & Deliverables**: Created `Dockerfile`, `docker-compose.yml`, `README.md` (with architecture diagrams & curl examples), 3 sample audit JSON records (`sample_audits/`), `AI_USAGE.md`, and `CONTRIBUTION.md`. |
 
 ---
@@ -27,10 +27,10 @@ We, the undersigned team members, hereby declare that:
 
 **Signed:**
 
-- **Member 1**: *[Signed - RAG Specialist]*  
-- **Member 2**: *[Signed - Data & Tool Specialist]*  
-- **Member 3**: *[Signed - Orchestration Lead]*  
-- **Member 4**: *[Signed - API, Infra & UI Lead]*  
+- **Member 1**: *[Signed - Data, Tools & Evaluation]*
+- **Member 2**: *[Signed - Documents, Ingestion & Retrieval]*
+- **Member 3**: *[Signed - LangGraph & LLM]*
+- **Member 4**: *[Signed - API, Infra & UI Lead]*
 
-**Date**: 6 October 2026  
-**Venue**: Netaji Subhas University of Technology (NSUT), Delhi  
+**Date**: 6 October 2026
+**Venue**: Netaji Subhas University of Technology (NSUT), Delhi
