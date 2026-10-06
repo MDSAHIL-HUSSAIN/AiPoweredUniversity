@@ -25,6 +25,7 @@ class RetrievedChunk(BaseModel):
     effective_from: date
     effective_to: date | None = None
     supersedes: list[str] = Field(default_factory=list)
+    conflict_key: str | None = None
     scope_programmes: list[str] = Field(default_factory=lambda: ["ALL"])
     scope_batches: list[str] = Field(default_factory=lambda: ["ALL"])
     provenance: str | None = None
