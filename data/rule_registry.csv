@@ -1,0 +1,7 @@
+rule_id,description,parameter,operator,value,scope_programmes,scope_batches,effective_from,effective_to,source_doc_id,source_section
+ATT-MIN-01,Minimum attendance percentage in a course to appear in its end-semester exam,min_attendance_pct,>=,75,ALL,ALL,2024-07-01,2026-07-31,NSUT-20260422-ATT75,TBD
+ATT-MIN-02,Minimum attendance percentage in a course to appear in its end-semester exam (revised by circular),min_attendance_pct,>=,80,ALL,ALL,2026-08-01,,ACAD-CIRC-2026-08-SYN,1
+PASS-MIN-01,Minimum total marks (as % of max marks) to pass a course,min_pass_pct,>=,40,ALL,ALL,2024-07-01,,ACAD-REG-2024,TBD
+SUPP-ELIG-01,Latest results that allow a student to take the supplementary exam in a course,supp_allowed_results,in,FAIL;ABSENT,ALL,ALL,2024-07-01,,NSUT-20260508-SUMMER,TBD
+PLC-CGPA-01,Minimum CGPA to register for campus placement,min_placement_cgpa,>=,6.5,ALL,ALL,2024-07-01,,TNP-POLICY-2024,TBD
+PLC-BKLG-01,Maximum active backlogs allowed to register for campus placement,max_active_backlogs,<=,0,ALL,ALL,2024-07-01,,TNP-POLICY-2024,TBD

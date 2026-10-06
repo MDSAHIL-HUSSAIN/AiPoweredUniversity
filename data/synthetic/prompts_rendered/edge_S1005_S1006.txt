@@ -1,0 +1,77 @@
+=== SYSTEM ===
+You generate synthetic university student records that will be used to test software.
+All students are fictional. Use realistic but made-up Indian names; never use a real person's name.
+Return ONLY one JSON object. No markdown, no code fences, no explanation before or after it.
+
+=== USER ===
+There are 10 deliberate test-case students, S1001 to S1010, described below. Follow each description exactly. Anything not mentioned should be normal: attendance between 34 and 40 classes, result PASS with total_marks between 55 and 90.
+
+S1001: B.Tech CSE, batch 2024. CS201 classes_attended = 32 (exactly the current minimum). All PASS. active_backlogs 0. cgpa about 8.
+S1002: B.Tech CSE, batch 2024. CS201 classes_attended = 31 (one class below the current minimum). All PASS. active_backlogs 0.
+S1003: B.Tech CSE, batch 2024. CS201 REGULAR result FAIL with total_marks = 39 (one mark below the pass mark). Other courses PASS. active_backlogs 1. cgpa between 6.60 and 7.50.
+S1004: B.Tech CSE, batch 2023. MA201 REGULAR result ABSENT (external_marks 0, internal_marks around 25). Other courses PASS. active_backlogs 1.
+S1005: B.Tech EE, batch 2024. EE203 classes_attended = 24 and REGULAR result DETAINED (external_marks 0). EE201 and MA203 are PASS with total_marks between 55 and 90. active_backlogs 1.
+S1006: B.Tech EE, batch 2023. FAIL in all three courses EE201, EE203 and MA203 (total_marks between 20 and 35). active_backlogs 3. cgpa between 5.00 and 5.80.
+S1007: B.Tech CSE, batch 2023. cgpa exactly 6.50. All PASS. active_backlogs 0.
+S1008: B.Tech EE, batch 2024. cgpa exactly 6.49. All PASS. active_backlogs 0.
+S1009: B.Tech CSE, batch 2023. CS203 is ONE record (one attendance entry) whose results list has two entries: REGULAR 2026-MAY FAIL (total_marks around 30) and SUPPLEMENTARY 2026-JUL PASS (total_marks around 50). Other courses PASS. active_backlogs 0.
+S1010: B.Tech EE, batch 2023. EE201 classes_attended = 30 (exactly the old minimum, below the new one). All PASS. active_backlogs 0.
+
+Courses (a student only takes the courses of their own programme, and must have a record for every one of them):
+- CS201 Data Structures (B.Tech CSE)
+- CS203 Database Management Systems (B.Tech CSE)
+- MA201 Mathematics III (B.Tech CSE)
+- EE201 Network Analysis (B.Tech EE)
+- EE203 Electrical Machines I (B.Tech EE)
+- MA203 Mathematics III (EE) (B.Tech EE)
+
+
+Rules every student must follow:
+- current_semester is 7 for batch 2023 and 5 for batch 2024
+- classes_held is 40 for every course
+- 0 <= classes_attended <= classes_held
+- every record has exactly one REGULAR result with exam_session "2026-MAY"; a SUPPLEMENTARY result (exam_session "2026-JUL") is only added where asked
+- total_marks = internal_marks + external_marks, max_marks = 100
+- result is PASS if total_marks >= 40, FAIL if total_marks < 40
+- ABSENT means the student missed the external exam: external_marks = 0
+- DETAINED means attendance was below 75.0% (fewer than 30 of 40 classes): external_marks = 0
+- active_backlogs = number of courses whose latest result is FAIL, ABSENT or DETAINED
+- cgpa is between 5.00 and 9.80 with 2 decimals
+
+Output schema:
+{
+  "students": [
+    {
+      "student_id": "S1001",
+      "full_name": "string",
+      "programme": "B.Tech CSE" or "B.Tech EE",
+      "batch_year": 2023 or 2024,
+      "current_semester": integer,
+      "cgpa": number with 2 decimals,
+      "active_backlogs": integer,
+      "records": [
+        {
+          "course_code": "string",
+          "classes_held": integer,
+          "classes_attended": integer,
+          "results": [
+            {
+              "exam_session": "2026-MAY",
+              "exam_type": "REGULAR" or "SUPPLEMENTARY",
+              "internal_marks": integer 0-40,
+              "external_marks": integer 0-60,
+              "total_marks": integer,
+              "max_marks": 100,
+              "result": "PASS" or "FAIL" or "ABSENT" or "DETAINED"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+
+
+
+Return ONLY these students in this reply: S1005, S1006 (the others are generated separately). Each of them needs exactly one record for each of the 3 courses of their programme.

@@ -1,0 +1,17 @@
+Courses (a student only takes the courses of their own programme, and must have a record for every one of them):
+{courses}
+
+Rules every student must follow:
+- current_semester is 7 for batch 2023 and 5 for batch 2024
+- classes_held is 40 for every course
+- 0 <= classes_attended <= classes_held
+- every record has exactly one REGULAR result with exam_session "2026-MAY"; a SUPPLEMENTARY result (exam_session "2026-JUL") is only added where asked
+- total_marks = internal_marks + external_marks, max_marks = 100
+- result is PASS if total_marks >= {pass_marks}, FAIL if total_marks < {pass_marks}
+- ABSENT means the student missed the external exam: external_marks = 0
+- DETAINED means attendance was below {may_att_pct}% (fewer than {may_att_need} of 40 classes): external_marks = 0
+- active_backlogs = number of courses whose latest result is FAIL, ABSENT or DETAINED
+- cgpa is between 5.00 and 9.80 with 2 decimals
+
+Output schema:
+{schema}
